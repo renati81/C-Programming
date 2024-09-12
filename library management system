@@ -1,5 +1,27 @@
 //Name : Sai Sruthi Renati
 //Build the library management system
+/*Question. Develop a program to manage a library's book records. The program should be menu-driven and allow the user to perform various operations on the book collection. Each book in the collection has the following information:
+• Title (string)
+• Author (string)
+• Publication Year (integer)
+• Genre (string)
+Requirements:
+1. Define a Structure:
+a. Define a struct book to store information for each book: title, author, publication year, and genre.
+2. Pre-populate the Program:
+a. The program should start with an array of 10 books with sample data (provide book titles, authors, publication years, and genres).
+3. Display a Menu:
+a. The program should display the following menu for the user:
+4. Functional Requirements:
+• Display all books: Print the details of all books (title, author, year, genre).
+• Search by title: Allow the user to search for a book by its title. If found, display the book’s details.
+• Sort books by title: Sort the book collection alphabetically by title and display the sorted list.
+• Sort books by author: Sort the book collection alphabetically by the author's name and display the sorted list.
+• Filter by genre: Allow the user to enter a genre and display all books that belong to the specified genre.*/
+
+
+
+
 #include <stdio.h>  //Header file for fuctions printf and scanf
 #include <string.h> //Header file for fuctions strcmp,strcspn
 
