@@ -1,0 +1,166 @@
+//Name : Sai Sruthi Renati
+//Build the library management system
+#include <stdio.h>  //Header file for fuctions printf and scanf
+#include <string.h> //Header file for fuctions strcmp,strcspn
+
+#define MAX_BOOKS 10  // can handle up to 10 books in an array
+
+// Book structure - keeps all the important stuff about a book as title, author, publication year and genre
+//Sub part 1 - 10 minutes
+struct book {
+    char title[50];
+    char author[50];
+    int year;
+    char genre[20];
+};
+
+// Function declaration to show books, find book, sort by title, sort by author and find by genre.
+//sub part 5 - 20 min
+void show_books(struct book lib[], int count);
+//sub part 6 - 30 min
+void find_book(struct book lib[], int count, char title[]);
+//sub part 7 - 40 mins
+void sort_by_title(struct book lib[], int count);
+//sub part 8 - 20 mins
+void sort_by_author(struct book lib[], int count);
+//sub part 9 - 20 mins
+void find_by_genre(struct book lib[], int count, char genre[]);
+
+int main() {
+    // pre-populating the 10 sample library data
+    // sub part 2 - 10 minutes
+    struct book library[MAX_BOOKS] = {
+    {"The Name of the Rose","Umberto Eco",1980,"Historical Mystery"},
+    {"The Picture of Dorian Gray","Oscar Wilde",1891,"Fiction"},
+    {"The Count of Monte Cristo","Alexandre Dumas",1844,"Historical Fiction"},
+    {"The Color Purple","Alice Walker",1982,"Fiction"},
+    {"The Bell Jar","Sylvia Plath",1963,"Novel"},
+    {"The Sound and the Fury","William Faulkner",1929,"Romance"},
+    {"The Little Prince","Antoine de Saint-Exupéry",1943,"Drama"},
+    {"The Good Earth","Pearl S. Buck",1931,"Fantasy"},
+    {"A Clockwork Orange","Anthony Burgess",1962,"Dystopian"},
+    {"One Hundred Years of Solitude","Gabriel García Márquez",1967,"Magical Realism"}
+    };
+
+    int choice;
+    char book_title[50];
+    char book_genre[20];
+
+    // Main loop to display menu
+    //sub part 3 - 15 min
+    do {
+        // Show the menu
+        printf("\n===== Library Books Management System =====\n");
+        printf("Menu:\n");
+        printf("0) Exit the Menu\n");
+        printf("1) Show all books in library\n");
+        printf("2) Find a book\n");
+        printf("3) Sort books by title\n");
+        printf("4) Sort books by author\n");
+        printf("5) Show books of a genre\n");
+        printf("Enter your choice : ");
+        scanf("%d", &choice);
+        getchar(); // It helps to read only the one input char that entered by user
+
+        // selecting the option by the user
+        //sub part 4 - 50 minutes
+        switch (choice) {
+ 	    case 0:
+                printf("Exiting the book search menu!\nHave a great day!\n");
+                break;
+            case 1:
+                show_books(library, MAX_BOOKS);
+                break;
+            case 2:
+                printf("Enter the title of book: ");
+                fgets(book_title, sizeof(book_title), stdin);
+                book_title[strcspn(book_title, "\n")] = 0;//If \n found in book_title,replace'\n'with'\0'which means replacing new line with null terminating
+                find_book(library, MAX_BOOKS, book_title);
+                break;
+            case 3:
+                sort_by_title(library, MAX_BOOKS);
+                show_books(library, MAX_BOOKS);
+                break;
+            case 4:
+                sort_by_author(library, MAX_BOOKS);
+                show_books(library, MAX_BOOKS);
+                break;
+            case 5:
+                printf("Enter the genre type: ");
+                fgets(book_genre, sizeof(book_genre), stdin);
+                book_genre[strcspn(book_genre, "\n")] = 0;//If \n found in book_genre,replace'\n'with'\0'which means replacing new line with null terminating
+                find_by_genre(library, MAX_BOOKS, book_genre);
+                break;
+            default:
+                printf("Invalid choice. Please try again. \n");
+        }
+    } while (choice != 0);
+
+    return 0;
+}
+
+// Displaying the list of books present in library
+void show_books(struct book lib[], int count) {
+    printf("\nList of books in the library:\n");
+    for (int i = 0; i < count; i++) {
+        printf("%s by %s (%d) - %s\n",
+               lib[i].title, lib[i].author, lib[i].year, lib[i].genre);
+    }
+}
+
+// searching the book based on the title
+void find_book(struct book lib[], int count, char title[]) {
+    for (int i = 0; i < count; i++) {
+        if (strcmp(lib[i].title, title) == 0) {
+            printf("Book found: %s by %s (%d) - %s\n",
+                   lib[i].title, lib[i].author, lib[i].year, lib[i].genre);
+            return;
+        }
+    }
+    printf("Sorry, unable to find '%s'title book. Please try again", title);
+}
+
+// Sort books by title (using bubble sort)
+void sort_by_title(struct book lib[], int count) {
+    struct book temp;
+    for (int i = 0; i < count - 1; i++) {
+        for (int j = 0; j < count - i - 1; j++) {
+            if (strcmp(lib[j].title, lib[j+1].title) > 0) {
+                temp = lib[j];
+                lib[j] = lib[j+1];
+                lib[j+1] = temp;
+            }
+        }
+    }
+    printf("\nsorted the books in the library by title.\n");
+}
+
+// Sort books by author (using bubble sort)
+void sort_by_author(struct book lib[], int count) {
+    struct book temp;
+    for (int i = 0; i < count - 1; i++) {
+        for (int j = 0; j < count - i - 1; j++) {
+            if (strcmp(lib[j].author, lib[j+1].author) > 0) {
+                temp = lib[j];
+                lib[j] = lib[j+1];
+                lib[j+1] = temp;
+            }
+        }
+    }
+    printf("\nBooks in the library sorted based on author.\n");
+}
+
+// searching the book based on the genre
+void find_by_genre(struct book lib[], int count, char genre[]) {
+    printf("\nPlease find the %s genre books:\n", genre);
+    int found = 0;
+    for (int i = 0; i < count; i++) {
+        if (strcmp(lib[i].genre, genre) == 0) {
+            printf("%s by %s (%d)\n", lib[i].title, lib[i].author, lib[i].year);
+            found = 1;
+        }
+    }
+    if (!found) {
+        printf("we don't have any %s genre books. Try another genre?\n", genre);
+    }
+}
