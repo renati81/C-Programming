@@ -1,3 +1,5 @@
+//Student details managemnet system based on Student ID by linked list.
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
